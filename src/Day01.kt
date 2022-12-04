@@ -1,18 +1,6 @@
 fun main() {
     val day = "01"
 
-    fun groupCaloriesByElf(input: List<String>): MutableList<MutableList<Int>> {
-        val caloriesGrouped = mutableListOf<MutableList<Int>>()
-        input.forEachIndexed() { index, inputString ->
-            if (index == 0 || inputString.isBlank()) {
-                caloriesGrouped.add(mutableListOf())
-            } else {
-                caloriesGrouped.last().add(inputString.toInt())
-            }
-        }
-        return caloriesGrouped
-    }
-
     fun part1(input: List<String>): Int {
         val caloriesGrouped = groupCaloriesByElf(input)
 
@@ -37,4 +25,18 @@ fun main() {
     val input = readInput("Day${day}")
     println(part1(input))
     println(part2(input))
+}
+
+
+
+private fun groupCaloriesByElf(input: List<String>): MutableList<MutableList<Int>> {
+    val caloriesGrouped = mutableListOf<MutableList<Int>>()
+    input.forEachIndexed() { index, inputString ->
+        if (index == 0 || inputString.isBlank()) {
+            caloriesGrouped.add(mutableListOf())
+        } else {
+            caloriesGrouped.last().add(inputString.toInt())
+        }
+    }
+    return caloriesGrouped
 }
