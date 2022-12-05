@@ -1,5 +1,4 @@
 fun main() {
-    val day = "XX"
 
     fun part1(input: List<String>): Int {
         return input.size
@@ -8,6 +7,8 @@ fun main() {
     fun part2(input: List<String>): Int {
         return input.size
     }
+
+    val day = "XX"
 
     // test if implementation meets criteria from the description, like:
     val testInput = readInput("Day${day}_test")
