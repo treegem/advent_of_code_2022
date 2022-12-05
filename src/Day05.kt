@@ -1,23 +1,23 @@
 fun main() {
 
     fun part1(input: List<String>): String {
-        val crates = getCrates(input)
+        val crates = input.getCrates()
 
-        val instructions = getInstructions(input)
+        input
+            .getInstructions()
+            .forEach { it.applyMovingSingleBoxes(crates) }
 
-        instructions.forEach { it.applyMovingSingleBoxes(crates) }
-
-        return getTopCratesString(crates)
+        return crates.readTopCrates()
     }
 
     fun part2(input: List<String>): String {
-        val crates = getCrates(input)
+        val crates = input.getCrates()
 
-        val instructions = getInstructions(input)
+        input
+            .getInstructions()
+            .forEach { it.applyMovingMultipleBoxes(crates) }
 
-        instructions.forEach { it.applyMovingMultipleBoxes(crates) }
-
-        return getTopCratesString(crates)
+        return crates.readTopCrates()
     }
 
     val day = "05"
@@ -74,19 +74,19 @@ private fun MutableList<Char>.takeSomeFromTop(amount: Int) =
             repeat(amount) { this.removeFirst() }
         }
 
-private fun getCrates(input: List<String>) = input
-    .filterNot { it.startsWith('m') }
-    .filterNot { it.isBlank() }
-    .filter { it.trim().startsWith('[') }
-    .toCrates()
+private fun List<String>.getCrates() =
+    this.filterNot { it.startsWith('m') }
+        .filterNot { it.isBlank() }
+        .filter { it.trim().startsWith('[') }
+        .toCrates()
 
-private fun getInstructions(input: List<String>) = input
-    .filter { it.startsWith('m') }
-    .toInstructions()
+private fun List<String>.getInstructions() =
+    this.filter { it.startsWith('m') }
+        .toInstructions()
 
-private fun getTopCratesString(crates: List<MutableList<Char>>) = crates
-    .map { it.first() }
-    .joinToString(separator = "")
+private fun List<MutableList<Char>>.readTopCrates() =
+    this.map { it.first() }
+        .joinToString(separator = "")
 
 private class Instruction(
     val amount: Int,
