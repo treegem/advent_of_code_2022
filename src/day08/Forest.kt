@@ -80,25 +80,17 @@ class Forest(input: List<String>) {
         else -> false
     }
 
-    private fun isVisibleFromAbove(tree: Tree): Boolean {
-        val treeHeightsAbove = (0 until tree.row).map { treeHeights[it][tree.column] }
-        return treeHeightsAbove.all { it < tree.height }
-    }
+    private fun isVisibleFromAbove(tree: Tree) =
+        (0 until tree.row).map { treeHeights[it][tree.column] }.all { it < tree.height }
 
-    private fun isVisibleFromBelow(tree: Tree): Boolean {
-        val treeHeightsBelow = (tree.row + 1..indices1d.last).map { treeHeights[it][tree.column] }
-        return treeHeightsBelow.all { it < tree.height }
-    }
+    private fun isVisibleFromBelow(tree: Tree) =
+        (tree.row + 1..indices1d.last).map { treeHeights[it][tree.column] }.all { it < tree.height }
 
-    private fun isVisibleFromLeft(tree: Tree): Boolean {
-        val treeHeightsToTheLeft = (0 until tree.column).map { treeHeights[tree.row][it] }
-        return treeHeightsToTheLeft.all { it < tree.height }
-    }
+    private fun isVisibleFromLeft(tree: Tree) =
+        (0 until tree.column).map { treeHeights[tree.row][it] }.all { it < tree.height }
 
-    private fun isVisibleFromRight(tree: Tree): Boolean {
-        val treeHeightsToTheRight = (tree.column + 1..indices1d.last).map { treeHeights[tree.row][it] }
-        return treeHeightsToTheRight.all { it < tree.height }
-    }
+    private fun isVisibleFromRight(tree: Tree) =
+        (tree.column + 1..indices1d.last).map { treeHeights[tree.row][it] }.all { it < tree.height }
 
     private fun isOnEdge(tree: Tree) =
         listOf(tree.row, tree.column).any { it == 0 || it == indices1d.last }
