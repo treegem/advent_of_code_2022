@@ -6,21 +6,16 @@ fun main() {
         return (20..220 step 40).sumOf { registerHistory[it]!! * it }
     }
 
-    fun part2(input: List<String>): String {
-        val registerValues =
-            input
-                .toRegisterHistory()
-                .toSortedMap()
-                .values
-
-        return registerValues
+    fun part2(input: List<String>) =
+        input.toRegisterHistory()
+            .toSortedMap()
+            .values
             .mapIndexed { pixel, spritePosition ->
                 if ((pixel % 40) in (spritePosition - 1..spritePosition + 1)) '█'
                 else ' '
             }
             .chunked(40)
             .joinToString("\n") { it.joinToString("") }
-    }
 
     val day = "10"
 
