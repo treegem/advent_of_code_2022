@@ -4,9 +4,16 @@ import readInput
 
 fun main() {
 
-    fun part1(input: List<String>) = solve(input, repetitions = 20, worriesDivisor = 3)
+    fun part1(input: List<String>) = solve(input.toSortedMonkeys(), repetitions = 20) { it.div(3) }
 
-    fun part2(input: List<String>) = solve(input, repetitions = 10_000, worriesDivisor = 1)
+    fun part2(input: List<String>): Long {
+        val monkeys = input.toSortedMonkeys()
+
+        return solve(monkeys, repetitions = 10_000) { newWorry ->
+            val multipliedDivisors = monkeys.map { it.testDivisor }.reduce { acc, divisor -> acc * divisor }
+            newWorry % multipliedDivisors
+        }
+    }
 
     val day = "11"
 
@@ -20,16 +27,15 @@ fun main() {
     println(part2(input))
 }
 
-private fun solve(input: List<String>, repetitions: Int, worriesDivisor: Int): Long {
-    val monkeys = input.toSortedMonkeys()
+private fun solve(monkeys: List<Monkey>, repetitions: Int, handleNewWorries: (Long) -> Long): Long {
     repeat(repetitions) {
         monkeys.forEach { monkey ->
-            monkey.inspectReduceWorriesAndThrowItems(monkeys, worriesDivisor)
+            monkey.inspectReduceWorriesAndThrowItems(monkeys, handleNewWorries)
         }
     }
 
     return monkeys
-        .map { it.inspectedItems.toLong() }
+        .map { it.inspectedItems }
         .sortedDescending()
         .take(2)
         .reduce { acc, inspectionCount -> acc * inspectionCount }
