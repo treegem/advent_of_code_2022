@@ -5,28 +5,36 @@ import day11.OperationType.TIMES
 
 data class Monkey(
     val identifier: Int,
-    val itemWorryLevels: MutableList<Int>,
+    val itemWorryLevels: MutableList<Long>,
     val operationType: OperationType,
     val operand: String,
     val testDivisor: Int,
     val successTarget: Int,
     val failTarget: Int,
 ) {
-    fun inspectAndThrowItems(monkeys: List<Monkey>) {
-        itemWorryLevels.forEach {
-            val dynamicOperand = operand.toIntOrNull() ?: it
+    var inspectedItems = 0
+
+    fun inspectReduceWorriesAndThrowItems(monkeys: List<Monkey>, worriesDivisor: Int) {
+        val multipliedDivisors = monkeys.map { it.testDivisor }.reduce { acc, divisor -> acc * divisor }
+        itemWorryLevels.forEach { itemWorryLevel ->
+            val dynamicOperand = operand.toLongOrNull() ?: itemWorryLevel
             val newWorryLevel = when (operationType) {
-                PLUS -> it + dynamicOperand
-                TIMES -> it * dynamicOperand
-            }.div(3)
+                PLUS -> itemWorryLevel + dynamicOperand
+                TIMES -> itemWorryLevel * dynamicOperand
+            }.div(worriesDivisor)
+            val itemReceiver = successTarget.takeIf { newWorryLevel % testDivisor == 0L } ?: failTarget
+            monkeys[itemReceiver].itemWorryLevels.add(newWorryLevel % multipliedDivisors)
+            inspectedItems += 1
         }
+        itemWorryLevels.clear()
     }
 }
 
-fun List<String>.toMonkeys() =
+fun List<String>.toSortedMonkeys() =
     this.filter { it.isNotBlank() }
         .chunked(6)
         .map { it.toMonkey() }
+        .sortedBy { it.identifier }
 
 private fun List<String>.toMonkey() =
     Monkey(
@@ -37,7 +45,7 @@ private fun List<String>.toMonkey() =
         itemWorryLevels = this[1]
             .substringAfterLast(": ")
             .split(", ")
-            .map { it.toInt() }
+            .map { it.toLong() }
             .toMutableList(),
         operationType = this[2]
             .substringAfter("old ")
