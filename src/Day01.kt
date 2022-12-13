@@ -1,3 +1,5 @@
+import common.readInput
+
 fun main() {
     val day = "01"
 

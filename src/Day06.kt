@@ -1,3 +1,5 @@
+import common.readInput
+
 fun main() {
 
     fun part1(input: String) = findMarkerEndIndex(input, 4)

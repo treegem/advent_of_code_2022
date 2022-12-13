@@ -1,9 +1,10 @@
 package day09
 
+import common.Position
 import kotlin.math.abs
 
 class FollowingKnot(private val leadingKnot: Knot) : Knot {
-    override var position = Position.startingPosition()
+    override var position = Position.defaultPosition()
 
     val visitedDistinctPositions = mutableSetOf(position.copy())
 

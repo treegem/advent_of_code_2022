@@ -1,6 +1,6 @@
 package day08
 
-import readInput
+import common.readInput
 
 fun main() {
 

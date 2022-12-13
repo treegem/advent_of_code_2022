@@ -1,3 +1,5 @@
+package common
+
 import java.io.File
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -9,7 +11,7 @@ fun readInput(name: String) = File("inputs", "$name.txt")
     .readLines()
 
 /**
- * Converts string to md5 hash.
+ * Converts string to common.md5 hash.
  */
 fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteArray()))
     .toString(16)

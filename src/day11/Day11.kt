@@ -1,6 +1,6 @@
 package day11
 
-import readInput
+import common.readInput
 
 fun main() {
 

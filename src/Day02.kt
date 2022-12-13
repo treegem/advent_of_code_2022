@@ -1,5 +1,6 @@
 import Move.*
 import Outcome.*
+import common.readInput
 
 val possibleMovesNumber = Move.values().size
 

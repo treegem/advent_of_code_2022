@@ -1,10 +1,10 @@
-package day09
+package common
 
 data class Position(
     var x: Int,
     var y: Int,
 ) {
     companion object {
-        fun startingPosition() = Position(0, 0)
+        fun defaultPosition() = Position(0, 0)
     }
 }
